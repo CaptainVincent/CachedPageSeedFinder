@@ -30,11 +30,11 @@ def getCachedPpageLink(domain, test, ignore):
         testFile = open(test,"r")
         context = testFile.read()
         testFile.close()
-        print inspect.currentframe().f_lineno
+        #print inspect.currentframe().f_lineno
     else:
         res = requests.get(cachedPageURL + 'web/*/' + domain + '*')
         context = res.text.encode("utf-8")
-        print inspect.currentframe().f_lineno
+        #print inspect.currentframe().f_lineno
 
     soup = BeautifulSoup(context, "html.parser")
 
@@ -49,7 +49,8 @@ def getCachedPpageLink(domain, test, ignore):
                         add = False
 
             if add == True:
-                linkCollector.append(href[0].text.encode("utf-8").replace(':80', ''))
+                linkCollector.append(cachedPageURL + 'web/2/' +
+                                     href[0].text.encode("utf-8").replace(':80', ''))
 
     return linkCollector
 
