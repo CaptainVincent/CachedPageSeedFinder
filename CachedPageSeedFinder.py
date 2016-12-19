@@ -4,14 +4,17 @@ Cached Page Seed Finder
 This command line tool/lib help you find some webpages you want still live in Cached Page Server.
 
 Usage:
-  CachedPageSeedFinder.py domain <domain> [--output=<ofname>] [--input=<dfname>] [--ignore=<list>]
+  CachedPageSeedFinder.py domain <domain> [--output=<ofname>] [--debugfile=<dfname>] [--ignore=<list>]
   CachedPageSeedFinder.py (-h | --help)
   CachedPageSeedFinder.py --version
 
 Options:
-  -h --help       Show this screen.
-  --version       Show version.
-  --ignore=<list> Ignore url with filter list. Split input use separator ',' ex. --ignore=key1,key2
+  -h --help            Show this screen.
+  --version            Show version.
+  --output=<ofname>    Output all links to a file
+  --ignore=<list>      Ignore url with filter list.
+                       Split input use separator ',' ex. --ignore=key1,key2
+  --debugfile=<dfname> Debug only. Test parse link function use an input file.
 
 """
 
@@ -24,10 +27,10 @@ import os.path
 
 cachedPageURL = 'https://web.archive.org/'
 
-def getCachedPpageLink(domain, test, ignore):
+def getCachedPpageLink(domain, debugfile, ignore):
 
-    if (test != None) and (os.path.exists(test) == True):
-        testFile = open(test,"r")
+    if os.path.exists(debugfile) == True:
+        testFile = open(debugfile,"r")
         context = testFile.read()
         testFile.close()
         #print inspect.currentframe().f_lineno
@@ -43,7 +46,7 @@ def getCachedPpageLink(domain, test, ignore):
         href = item.select('a')
         if len(href) > 0:
             add = True
-            if ignore != None:
+            if (ignore != None) and (len(ignore) > 0) :
                 for filter in ignore.split(','):
                     if href[0].text.find(filter) != -1:
                         add = False
@@ -55,9 +58,9 @@ def getCachedPpageLink(domain, test, ignore):
     return linkCollector
 
 if __name__ == '__main__':
-    arguments = docopt(__doc__, version='CachedPageSeedFinder 0.1')
+    arguments = docopt(__doc__, version='CachedPageSeedFinder 0.2')
     #print arguments
-    table = getCachedPpageLink(arguments['<domain>'], arguments['--input'], arguments['--ignore'])
+    table = getCachedPpageLink(arguments['<domain>'], arguments['--debugfile'], arguments['--ignore'])
 
     if (arguments['--output'] != None) and (len(arguments['--output']) > 0):
         thefile = open(arguments['--output'], "w")
