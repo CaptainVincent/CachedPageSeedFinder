@@ -55,13 +55,11 @@ def getCachedPageLink(domain, debugfile, ignore, history):
 
     ConvertLinkCollector = []
     if history == True:
-        #for item in linkCollector:
-            item = 'http://plus.girlspic.jp/1247/images'
+        for item in linkCollector:
             res = requests.get(cachedPageURL + 'web/*/' + item)
             soup = BeautifulSoup(res.text.encode("utf-8"), "html.parser")
             for link in soup.select('.captures'):
                ConvertLinkCollector.append(cachedPageURL + link.find('a').get('href'))
-
     else:
         for item in linkCollector:
             ConvertLinkCollector.append(cachedPageURL + 'web/2/' + item)
