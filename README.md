@@ -6,7 +6,7 @@ This command line tool/lib help you find some webpages you want still alive in C
 
 
 ### Usage:
-* CachedPageSeedFinder.py domain \<domain\> [--output=<ofname>] [--input=<dfname>] [--ignore=<list>]
+* CachedPageSeedFinder.py domain \<domain\> [--output=\<ofname\>] [--input=\<dfname\>] [--ignore=\<list\>]
 * CachedPageSeedFinder.py (-h | --help)
 * CachedPageSeedFinder.py --version
 
